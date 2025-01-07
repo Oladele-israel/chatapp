@@ -42,7 +42,7 @@ export const checkAndRenewToken = async (req, res, next) => {
         userId = decoded.access2;
 
         const userResult = await pool.query(
-          "SELECT id, name FROM users WHERE id = $1",
+          "SELECT id, user_name FROM users WHERE id = $1",
           [userId]
         );
         const user = userResult.rows[0];
@@ -73,7 +73,7 @@ export const checkAndRenewToken = async (req, res, next) => {
 
     if (userId) {
       const userResult = await pool.query(
-        "SELECT  name, email, id FROM users WHERE id = $1",
+        "SELECT  user_name, email, id FROM users WHERE id = $1",
         [userId]
       );
       const user = userResult.rows[0];

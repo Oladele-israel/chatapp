@@ -1,14 +1,13 @@
 import bcrypt from "bcryptjs";
 import pool from "../utils/db.js";
 import { validateUserInput } from "../utils/validator.js";
-
 import jwt from "jsonwebtoken";
 
 export const signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { user_name, email, password } = req.body;
 
   try {
-    if (!name || !email || !password) {
+    if (!user_name || !email || !password) {
       return res.status(400).json({
         message: "all field must be entered!",
       });
@@ -23,7 +22,11 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "Email already exists" });
     }
 
-    const { error, value } = validateUserInput({ name, email, password });
+    const { error, value } = validateUserInput({
+      user_name,
+      email,
+      password,
+    });
 
     if (error) {
       const errorMessages = error.details.map((err) => err.message);
@@ -32,8 +35,8 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await pool.query(
-      "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *",
-      [name, email, hashedPassword]
+      "INSERT INTO users (user_name, email, password) VALUES ($1, $2, $3) RETURNING *",
+      [user_name, email, hashedPassword]
     );
 
     return res
@@ -62,7 +65,7 @@ export const login = async (req, res) => {
 
   try {
     const result = await pool.query(
-      "SELECT id, name, email, password FROM users WHERE email = $1",
+      "SELECT id, user_name, email, password FROM users WHERE email = $1",
       [email]
     );
 
@@ -110,11 +113,11 @@ export const login = async (req, res) => {
       httpOnly: true,
       sameSite: "none",
       maxAge: 10 * 60 * 1000,
-      secure: true,
+      // secure: true,
     });
     res.cookie("Sauce", refreshToken, {
       httpOnly: true,
-      secure: true,
+      // secure: true,
       sameSite: "none",
       maxAge: 1 * 24 * 60 * 60 * 1000,
     });
@@ -158,3 +161,5 @@ export const validateToken = (req, res) => {
     authUser: authUser,
   });
 };
+
+//Google authentication

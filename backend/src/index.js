@@ -5,18 +5,20 @@ import cors from "cors";
 import helmet from "helmet";
 import userRouter from "./Routes/user.routes.js";
 import cookieParser from "cookie-parser";
-import expenseRouter from "./Routes/expense.routes.js";
-import budgetsRouter from "./Routes/budget.routes.js";
 
 const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+  })
+);
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://limitless-xpnx.vercel.app"],
+    origin: ["http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true,
   })
@@ -29,8 +31,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/user", userRouter);
-app.use("/expense", expenseRouter);
-app.use("/budgets", budgetsRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ error: "Route not found" });
