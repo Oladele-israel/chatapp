@@ -6,6 +6,7 @@ import Signup from "./pages/Signup.jsx";
 import App from "./App.jsx";
 import Login from "./pages/Login.jsx";
 import Layout from "./Layout/Layout.jsx";
+import Home from "./pages/Home.jsx";
 /*creating the browser router */
 const router = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <App />,
+        element: <Home />,
       },
     ],
   },
