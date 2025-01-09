@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-color: #c3cc5a;
+  --secondary: #303030;
+  --bg: #222222;
+}
+
 body {
-  background-color: #303030;
+  background-color: var(--secondary);
   overflow-x: hidden;
 }
