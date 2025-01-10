@@ -8,6 +8,8 @@ import Live from "./pages/Live.jsx";
 import Login from "./pages/Login.jsx";
 import Layout from "./Layout/Layout.jsx";
 import Home from "./pages/Home.jsx";
+import ProfileSetting from "./pages/ProfileSetting.jsx";
+import Notification from "./pages/Notification.jsx";
 /*creating the browser router */
 const router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
       {
         path: "/live",
         element: <Live />,
+      },
+      {
+        path: "/setting",
+        element: <ProfileSetting />,
+      },
+      {
+        path: "/notification",
+        element: <Notification />,
       },
     ],
   },
